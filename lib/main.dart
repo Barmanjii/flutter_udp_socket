@@ -37,11 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String _responseMessage = '';
 
   Future<void> _sendMessage() async {
-    final String message = 'Hello from Flutter';
+    final String message = 'IP';
     try {
       // Create a UDP socket
       RawDatagramSocket udpSocket =
           await RawDatagramSocket.bind(InternetAddress.anyIPv4, 12345);
+
+      udpSocket.broadcastEnabled = true;
+
       // Send message to server
       udpSocket.send(
           utf8.encode(message), InternetAddress(broadbastIp), broadcastPort);
