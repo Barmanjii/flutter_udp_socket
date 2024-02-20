@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       // Create a UDP socket
       RawDatagramSocket udpSocket =
-          await RawDatagramSocket.bind(InternetAddress.anyIPv4, 12345);
+          await RawDatagramSocket.bind(InternetAddress.anyIPv4, 1234);
 
       udpSocket.broadcastEnabled = true;
 
@@ -74,9 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Response from Server:',
-            ),
+            // const Text(
+            //   'Response from Server:',
+            // ),
             Text(
               _responseMessage,
               style: const TextStyle(fontWeight: FontWeight.bold),
