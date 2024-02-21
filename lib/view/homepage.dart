@@ -47,7 +47,7 @@ class MyHomePageState extends State<MyHomePage> {
     sendMessage();
 
     // Set up a periodic timer to run sendMessage every 1 second for a total of 5 seconds
-    int count = 0;
+    int count = 1;
     _loadingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       sendMessage();
       count++;
