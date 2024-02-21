@@ -34,6 +34,7 @@ class MyHomePageState extends State<MyHomePage> {
     setState(() {
       returnData.clear();
       isLoading = false; // Reset loading state
+      selectedIndex = -1; // Resetting the index
     });
   }
 

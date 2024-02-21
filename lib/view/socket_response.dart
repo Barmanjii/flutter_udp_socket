@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_udp_socket/api/base_url.dart';
+import 'package:flutter_udp_socket/api/selected_machine_details.dart';
+import 'package:flutter_udp_socket/constants.dart';
 import 'package:flutter_udp_socket/model/socket_reponse.dart';
 import 'package:flutter_udp_socket/view/file_sharing.dart';
 
@@ -14,8 +15,6 @@ class SocketResponseListView extends StatefulWidget {
 }
 
 class SocketResponseListViewState extends State<SocketResponseListView> {
-  int selectedIndex = -1; // Initially no item is selected
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -38,7 +37,8 @@ class SocketResponseListViewState extends State<SocketResponseListView> {
               setState(() {
                 selectedIndex = index;
               });
-              SelectedBaseURL().baseURL = widget.socketResponses[index];
+              SelectedBaseMachineDetails().baseMachineDetails =
+                  widget.socketResponses[index];
               Navigator.push(
                 context,
                 MaterialPageRoute(
