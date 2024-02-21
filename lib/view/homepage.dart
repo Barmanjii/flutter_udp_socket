@@ -22,19 +22,48 @@ class MyHomePageState extends State<MyHomePage> {
   Map<String, dynamic> _respObj = {};
   bool isLoading = false;
 
-  void _refreshData() {
-    setState(() {
-      returnData.clear();
-      isLoading = false;
-    });
-    sendMessage();
+  @override
+  void initState() {
+    super.initState();
+    // Trigger refresh data when the page is initially loaded
+    _refreshData();
   }
 
-  void _clearData() {
+  Timer? _loadingTimer; // Declare a Timer variable
+
+  void _refreshData() {
     setState(() {
-      returnData.clear();
-      isLoading = false; // Reset loading state
+      returnData.clear(); // Clearing existing data
+      isLoading = false; // Remove Extra loading
       selectedIndex = -1; // Resetting the index
+    });
+
+    // Cancel the existing Timer and run it again
+    _loadingTimer?.cancel();
+    // Start the Timer
+    _startLoadingTimer();
+
+    // Socket Broadcasting
+    sendMessage();
+
+    // Set up a periodic timer to run sendMessage every 1 second for a total of 5 seconds
+    int count = 0;
+    _loadingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      sendMessage();
+      count++;
+      if (count >= 5) {
+        // After 5 seconds (5 calls), cancel the timer
+        timer.cancel();
+      }
+    });
+  }
+
+  void _startLoadingTimer() {
+    // Start the timer for 5 seconds
+    _loadingTimer = Timer(const Duration(seconds: 5), () {
+      setState(() {
+        _loadingTimer = null; // Remove the timer reference
+      });
     });
   }
 
@@ -84,6 +113,13 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void dispose() {
+    // Dispose of the timer when the widget is disposed
+    _loadingTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -94,37 +130,29 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(
-                  onPressed: isLoading
-                      ? null
-                      : sendMessage, // Disable button when loading
-                  icon: const Icon(Icons.play_circle_outline),
-                  tooltip: "Find Robots",
-                ),
                 // const SizedBox(width: 20),
                 IconButton(
-                  onPressed: isLoading ? null : _refreshData,
+                  onPressed: _refreshData,
                   icon: const Icon(Icons.refresh_outlined),
                   tooltip: "Refresh",
                 ),
-                IconButton(
-                  onPressed: isLoading ? null : _clearData,
-                  icon: const Icon(Icons.clear),
-                  tooltip: "Clear",
-                ),
+
+                if (_loadingTimer != null)
+                  const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(),
+                  ),
               ],
             ),
             const SizedBox(height: 20),
-            isLoading
-                ? const LinearProgressIndicator() // Show progress indicator if loading
-                : Expanded(
-                    child: SocketResponseListView(socketResponses: returnData),
-                  ),
+            Expanded(
+              child: SocketResponseListView(socketResponses: returnData),
+            ),
           ],
         ),
       ),

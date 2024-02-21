@@ -15,4 +15,5 @@ class SelectedBaseMachineDetails {
 
   // Selected Machine Details
   SocketResponse? baseMachineDetails;
+  SocketResponse? baseURL;
 }
