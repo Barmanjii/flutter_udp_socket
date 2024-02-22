@@ -2,7 +2,7 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_udp_socket/api/selected_machine_details.dart';
 
-class PingConnection with ChangeNotifier {
+class PingConnection {
   void checkConnection(String? wifi, String? ethernet) async {
     if (wifi != null && ethernet != null) {
       await checkWifiConnection(wifi);
@@ -28,8 +28,8 @@ class PingConnection with ChangeNotifier {
         if (kDebugMode) {
           print("WiFi working fine");
         }
+        SelectedBaseMachineDetails().baseURL = wifi;
       }
-      SelectedBaseMachineDetails().baseURL = wifi;
     });
   }
 
@@ -40,8 +40,8 @@ class PingConnection with ChangeNotifier {
         if (kDebugMode) {
           print("Ethernet working fine");
         }
+        SelectedBaseMachineDetails().baseURL = ethernet;
       }
-      SelectedBaseMachineDetails().baseURL = ethernet;
     });
   }
 }

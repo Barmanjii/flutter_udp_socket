@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_udp_socket/api/selected_machine_details.dart';
 import 'package:flutter_udp_socket/constants.dart';
 import 'package:flutter_udp_socket/model/socket_reponse.dart';
-import 'package:flutter_udp_socket/pages/file_sharing.dart';
+import 'package:flutter_udp_socket/pages/connection.dart';
 
 class SocketResponseListView extends StatefulWidget {
   final List<SocketResponse> socketResponses;
