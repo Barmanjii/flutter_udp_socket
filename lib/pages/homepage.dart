@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_udp_socket/constants.dart';
 import 'package:flutter_udp_socket/model/socket_reponse.dart';
-import 'package:flutter_udp_socket/view/socket_response.dart';
+import 'package:flutter_udp_socket/logic/socket_response.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

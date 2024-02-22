@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_udp_socket/view/homepage.dart';
+import 'package:flutter_udp_socket/pages/homepage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
